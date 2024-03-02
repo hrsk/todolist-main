@@ -1,9 +1,11 @@
 import { Button } from "./Button";
-import { TaskType } from "./types";
+import { TaskType, FilterValuesType } from "./types";
 
 export type PropsType = {
     title: string
     tasks: TaskType[]
+    removeTask: (taskId: number) => void
+    changeTasksFilter: (filter: FilterValuesType) => void
 }
 
 export const Todolist = (props: PropsType) => {
@@ -21,14 +23,15 @@ export const Todolist = (props: PropsType) => {
                         <li key={task.id}>
                             <input type="checkbox" checked={task.isDone} />
                             <span>{task.title}</span>
+                            <Button onClickCallback={() => props.removeTask(task.id)} title="x" />
                         </li>
                     );
                 })}
             </ul>
             <div>
-                <Button title="All" />
-                <Button title="Active" />
-                <Button title="Completed" />
+                <Button onClickCallback={() => { props.changeTasksFilter("All") }} title="All" />
+                <Button onClickCallback={() => { props.changeTasksFilter("Active") }} title="Active" />
+                <Button onClickCallback={() => { props.changeTasksFilter("Completed") }} title="Completed" />
             </div>
         </div>
     );

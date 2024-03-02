@@ -1,9 +1,10 @@
 type PropsType = {
     title: string
+    onClickCallback?: () => void
 }
 
-export const Button = ({ title }: PropsType) => {
+export const Button = ({ title, onClickCallback }: PropsType) => {
     return (
-        <button onClick={() => { alert(title) }}>{title}</button>
+        <button onClick={onClickCallback}>{title}</button>
     )
 }
