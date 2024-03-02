@@ -1,3 +1,4 @@
+import { ChangeEvent, useState, KeyboardEvent } from "react";
 import { Button } from "./Button";
 import { TaskType, FilterValuesType } from "./types";
 
@@ -11,12 +12,28 @@ export type PropsType = {
 
 export const Todolist = (props: PropsType) => {
 
+    const [value, setValue] = useState<string>('')
+
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setValue(e.currentTarget.value)
+    }
+    const addTask = () => {
+        props.addTask(value)
+        setValue('')
+    }
+
+    const onKeyPressHandler = (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            addTask()
+        }
+    }
+
     return (
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input />
-                <Button title="+" onClick={() => props.addTask('asdasdads')} />
+                <input value={value} onChange={onChangeHandler} onKeyUp={onKeyPressHandler} />
+                <Button title="+" onClick={addTask} />
             </div>
             <ul style={{ listStyle: 'none' }}>
                 {props.tasks.map(task => {
