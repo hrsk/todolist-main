@@ -1,6 +1,7 @@
 import { ChangeEvent, useState, KeyboardEvent } from "react";
 import { Button } from "./Button";
 import { TaskType, FilterValuesType } from "./types";
+import './App.css';
 
 export type PropsType = {
     title: string
@@ -14,11 +15,15 @@ export type PropsType = {
 export const Todolist = (props: PropsType) => {
 
     const [value, setValue] = useState<string>('')
+    const [error, setError] = useState<string | null>(null)
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.currentTarget.value)
     }
     const addTask = () => {
+        if (value.trim() === '') {
+            setError('Title is required!')
+        }
         if (value.trim() !== '') {
             props.addTask(value.trim())
             setValue('')
@@ -29,19 +34,27 @@ export const Todolist = (props: PropsType) => {
         if (e.key === 'Enter') {
             addTask()
         }
+        setError(null)
     }
 
     return (
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input value={value} onChange={onChangeHandler} onKeyUp={onKeyPressHandler} />
+                <input className={error ? "error" : ''}
+                    value={value}
+                    onChange={onChangeHandler}
+                    onKeyUp={onKeyPressHandler} />
                 <Button title="+" onClick={addTask} />
+                {
+                    error && <span className={error && "error-message"}
+                        style={{ display: "block" }}>{error}</span>
+                }
             </div>
             <ul style={{ listStyle: 'none' }}>
                 {props.tasks.map(task => {
                     return (
-                        <li key={task.id}>
+                        <li key={task.id} className={task.isDone ? "is-done" : ''}>
                             <input type="checkbox"
                                 checked={task.isDone}
                                 onChange={(e) => props.changeTaskStatus(task.id, e.currentTarget.checked)} />
