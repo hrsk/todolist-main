@@ -7,9 +7,10 @@ export type PropsType = {
     title: string
     tasks: TaskType[]
     filter: FilterValuesType
+    todolistId: string
     addTask: (value: string) => void
     removeTask: (taskId: string) => void
-    changeTasksFilter: (filter: FilterValuesType) => void
+    changeTasksFilter: (todolistId: string, filter: FilterValuesType) => void
     changeTaskStatus: (taskId: string, isDone: boolean) => void
 }
 
@@ -67,11 +68,11 @@ export const Todolist = (props: PropsType) => {
             </ul>
             <div>
                 <Button className={props.filter === 'All' ? "active-filter" : ''}
-                    onClick={() => { props.changeTasksFilter("All") }} title="All" />
+                    onClick={() => { props.changeTasksFilter(props.todolistId, "All") }} title="All" />
                 <Button className={props.filter === 'Active' ? "active-filter" : ''}
-                    onClick={() => { props.changeTasksFilter("Active") }} title="Active" />
+                    onClick={() => { props.changeTasksFilter(props.todolistId, "Active") }} title="Active" />
                 <Button className={props.filter === 'Completed' ? "active-filter" : ''}
-                    onClick={() => { props.changeTasksFilter("Completed") }} title="Completed" />
+                    onClick={() => { props.changeTasksFilter(props.todolistId, "Completed") }} title="Completed" />
             </div>
         </div>
     );

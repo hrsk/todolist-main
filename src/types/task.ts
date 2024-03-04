@@ -3,5 +3,3 @@ export type TaskType = {
     title: string
     isDone: boolean
 }
-
-export type FilterValuesType = 'All' | 'Active' | 'Completed'
