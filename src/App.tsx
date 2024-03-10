@@ -1,10 +1,9 @@
-import { ChangeEvent, useState, KeyboardEvent } from 'react';
+import { useState } from 'react';
 import { v1 } from 'uuid';
+import { AddItemForm } from './AddItemForm';
 import './App.css';
 import { Todolist } from './Todolist';
 import { FilterValuesType, TasksType, TodolistType } from './types';
-import { Button } from './Button';
-import { AddItemForm } from './AddItemForm';
 
 export const App = () => {
 
@@ -29,8 +28,6 @@ export const App = () => {
         { id: todolistID1, title: 'What to learn', filter: 'All' },
         { id: todolistID2, title: 'Movies', filter: 'All' },
     ])
-
-    // const [value, setValue] = useState<string>('')
 
     const removeTask = (todolistId: string, taskId: string) => {
         setTasks({
@@ -92,30 +89,9 @@ export const App = () => {
         )
     }
 
-    // const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    //     setValue(e.currentTarget.value)
-    // }
-
-    // const addTodolistHandler = () => {
-    //     if (value.trim() !== '') {
-    //         addTodolist(value.trim())
-    //         setValue('')
-    //     }
-    // }
-
-    // const onKeyPressHandler = (e: KeyboardEvent) => {
-    //     if (e.altKey && e.key === 'Enter') {
-    //         addTodolistHandler()
-    //     }
-    // }
-
     return (
         <div className="App">
             <AddItemForm callback={addTodolist} />
-            {/* <div style={{ display: 'flex', alignItems: 'start' }}>
-                <input value={value} onChange={onChangeHandler} onKeyUp={onKeyPressHandler} />
-                <Button title='+' onClick={addTodolistHandler} />
-            </div> */}
             {todolists.map(todolist => {
 
                 let filteredTasks = tasks[todolist.id];
