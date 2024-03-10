@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { ChangeEvent, useState, KeyboardEvent } from 'react';
 import { v1 } from 'uuid';
 import './App.css';
 import { Todolist } from './Todolist';
 import { FilterValuesType, TasksType, TodolistType } from './types';
+import { Button } from './Button';
 
 export const App = () => {
 
@@ -27,6 +28,8 @@ export const App = () => {
         { id: todolistID1, title: 'What to learn', filter: 'All' },
         { id: todolistID2, title: 'Movies', filter: 'All' },
     ])
+
+    const [value, setValue] = useState<string>('')
 
     const removeTask = (todolistId: string, taskId: string) => {
         setTasks({
@@ -61,12 +64,41 @@ export const App = () => {
         setTodolists(todolists.filter(todolist => todolist.id !== todolistId))
 
         delete tasks[todolistId]
-        setTasks({ ...tasks })
-        console.log(tasks)
+        // setTasks({ ...tasks })
+        // console.log(tasks)
+    }
+
+    const addTodolist = (value: string) => {
+        const newTodolistId = v1()
+        const newTodolist: TodolistType = { id: newTodolistId, title: value, filter: 'All' }
+
+        setTodolists([newTodolist, ...todolists])
+        setTasks({ ...tasks, [newTodolistId]: [] })
+    }
+
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setValue(e.currentTarget.value)
+    }
+
+    const addTodolistHandler = () => {
+        if (value.trim() !== '') {
+            addTodolist(value.trim())
+            setValue('')
+        }
+    }
+
+    const onKeyPressHandler = (e: KeyboardEvent) => {
+        if (e.altKey && e.key === 'Enter') {
+            addTodolistHandler()
+        }
     }
 
     return (
         <div className="App">
+            <div style={{ display: 'flex', alignItems: 'start' }}>
+                <input value={value} onChange={onChangeHandler} onKeyUp={onKeyPressHandler} />
+                <Button title='+' onClick={addTodolistHandler} />
+            </div>
             {todolists.map(todolist => {
 
                 let filteredTasks = tasks[todolist.id];
