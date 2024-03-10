@@ -77,6 +77,21 @@ export const App = () => {
         setTasks({ ...tasks, [newTodolistId]: [] })
     }
 
+    const changeTaskTitle = (todolistId: string, taskId: string, value: string) => {
+        setTasks({
+            ...tasks, [todolistId]: tasks[todolistId].map(task => task.id === taskId
+                ? { ...task, title: value }
+                : task)
+        })
+    }
+
+    const changeTodolistTitle = (todolistId: string, value: string) => {
+        setTodolists(
+            todolists.map(todolist => todolist.id === todolistId
+                ? { ...todolist, title: value } : todolist)
+        )
+    }
+
     // const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     //     setValue(e.currentTarget.value)
     // }
@@ -121,7 +136,9 @@ export const App = () => {
                         addTask={addTask}
                         changeTasksFilter={changeTasksFilter}
                         changeTaskStatus={changeTaskStatus}
-                        removeTodolist={removeTodolist} />
+                        removeTodolist={removeTodolist}
+                        changeTaskTitle={changeTaskTitle}
+                        changeTodolistTitle={changeTodolistTitle} />
                 )
             })}
         </div>

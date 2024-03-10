@@ -3,6 +3,7 @@ import { Button } from "./Button";
 import { TaskType, FilterValuesType } from "./types";
 import './App.css';
 import { AddItemForm } from "./AddItemForm";
+import { EditableForm } from "./EditableForm";
 
 export type PropsType = {
     title: string
@@ -13,6 +14,8 @@ export type PropsType = {
     removeTask: (todolistId: string, taskId: string) => void
     changeTasksFilter: (todolistId: string, filter: FilterValuesType) => void
     changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
+    changeTaskTitle: (todolistId: string, taskId: string, value: string) => void
+    changeTodolistTitle: (todolistId: string, value: string) => void
     removeTodolist: (todolistId: string) => void
 }
 
@@ -60,10 +63,22 @@ export const Todolist = (props: PropsType) => {
         props.changeTasksFilter(props.todolistId, filter)
     }
 
+    const changeTaskTitleHandler = (taskId: string, value: string) => {
+        props.changeTaskTitle(props.todolistId, taskId, value)
+    }
+
+    const changeTodolistTitleHandler = (value: string) => {
+        props.changeTodolistTitle(props.todolistId, value)
+    }
+
     return (
         <div>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-                <h3>{props.title}</h3>
+                <h3>
+                    <EditableForm value={props.title}
+                        callback={(value) => changeTodolistTitleHandler(value)} />
+                </h3>
+                {/* <h3>{props.title}</h3> */}
                 <Button title="x" onClick={removeTodolistHandler} />
             </div>
             <AddItemForm callback={addTask} />
@@ -85,7 +100,8 @@ export const Todolist = (props: PropsType) => {
                             <input type="checkbox"
                                 checked={task.isDone}
                                 onChange={(e) => changeTaskStatusHandler(task.id, e.currentTarget.checked)} />
-                            <span>{task.title}</span>
+                            {/* <span>{task.title}</span> */}
+                            <EditableForm value={task.title} callback={(value) => changeTaskTitleHandler(task.id, value)} />
                             <Button onClick={() => removeTaskHandler(task.id)} title="x" />
                         </li>
                     );
