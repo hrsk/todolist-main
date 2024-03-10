@@ -4,6 +4,7 @@ import './App.css';
 import { Todolist } from './Todolist';
 import { FilterValuesType, TasksType, TodolistType } from './types';
 import { Button } from './Button';
+import { AddItemForm } from './AddItemForm';
 
 export const App = () => {
 
@@ -29,7 +30,7 @@ export const App = () => {
         { id: todolistID2, title: 'Movies', filter: 'All' },
     ])
 
-    const [value, setValue] = useState<string>('')
+    // const [value, setValue] = useState<string>('')
 
     const removeTask = (todolistId: string, taskId: string) => {
         setTasks({
@@ -76,29 +77,30 @@ export const App = () => {
         setTasks({ ...tasks, [newTodolistId]: [] })
     }
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setValue(e.currentTarget.value)
-    }
+    // const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    //     setValue(e.currentTarget.value)
+    // }
 
-    const addTodolistHandler = () => {
-        if (value.trim() !== '') {
-            addTodolist(value.trim())
-            setValue('')
-        }
-    }
+    // const addTodolistHandler = () => {
+    //     if (value.trim() !== '') {
+    //         addTodolist(value.trim())
+    //         setValue('')
+    //     }
+    // }
 
-    const onKeyPressHandler = (e: KeyboardEvent) => {
-        if (e.altKey && e.key === 'Enter') {
-            addTodolistHandler()
-        }
-    }
+    // const onKeyPressHandler = (e: KeyboardEvent) => {
+    //     if (e.altKey && e.key === 'Enter') {
+    //         addTodolistHandler()
+    //     }
+    // }
 
     return (
         <div className="App">
-            <div style={{ display: 'flex', alignItems: 'start' }}>
+            <AddItemForm callback={addTodolist} />
+            {/* <div style={{ display: 'flex', alignItems: 'start' }}>
                 <input value={value} onChange={onChangeHandler} onKeyUp={onKeyPressHandler} />
                 <Button title='+' onClick={addTodolistHandler} />
-            </div>
+            </div> */}
             {todolists.map(todolist => {
 
                 let filteredTasks = tasks[todolist.id];
