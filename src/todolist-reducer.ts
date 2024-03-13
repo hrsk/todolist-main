@@ -37,58 +37,43 @@ type ActionsType = AddTodolistActionType
     | ChangeTodolistTitleActionType
     | ChangeTodolistFilterActionType
 
-export type AddTodolistActionType = {
-    type: 'ADD_TODOLIST'
-    todolistId: string
-    value: string
-}
+export type AddTodolistActionType = ReturnType<typeof addTodolistActionCreator>
 
-export type RemoveTodolistActionType = {
-    type: 'REMOVE_TODOLIST'
-    todolistId: string
-}
+export type RemoveTodolistActionType = ReturnType<typeof removeTodolistActionCreator>
 
-type ChangeTodolistTitleActionType = {
-    type: 'CHANGE_TODOLIST_TITLE'
-    todolistId: string
-    value: string
-}
+type ChangeTodolistTitleActionType = ReturnType<typeof changeTodolistTitleActionCreator>
 
-type ChangeTodolistFilterActionType = {
-    type: 'CHANGE_TODOLIST_FILTER'
-    todolistId: string
-    filter: FilterValuesType
-}
+type ChangeTodolistFilterActionType = ReturnType<typeof changeTodolistFilterActionCreator>
 
 //actions
 
-export const addTodolistActionCreator = (value: string): AddTodolistActionType => {
+export const addTodolistActionCreator = (value: string) => {
     return {
         type: 'ADD_TODOLIST',
         todolistId: v1(),
         value,
-    }
+    } as const
 }
 
-export const removeTodolistActionCreator = (todolistId: string): RemoveTodolistActionType => {
+export const removeTodolistActionCreator = (todolistId: string) => {
     return {
         type: 'REMOVE_TODOLIST',
         todolistId,
-    }
+    } as const
 }
 
-export const changeTodolistFilterActionCreator = (todolistId: string, filter: FilterValuesType): ChangeTodolistFilterActionType => {
+export const changeTodolistFilterActionCreator = (todolistId: string, filter: FilterValuesType) => {
     return {
         type: 'CHANGE_TODOLIST_FILTER',
         todolistId,
         filter,
-    }
+    } as const
 }
 
-export const changeTodolistTitleActionCreator = (todolistId: string, value: string): ChangeTodolistTitleActionType => {
+export const changeTodolistTitleActionCreator = (todolistId: string, value: string) => {
     return {
         type: 'CHANGE_TODOLIST_TITLE',
         todolistId,
         value,
-    }
+    } as const
 }
