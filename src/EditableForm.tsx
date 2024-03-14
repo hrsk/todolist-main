@@ -1,11 +1,14 @@
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, memo, useState } from "react"
 
 type PropsType = {
     value: string
     callback: (value: string) => void
 }
 
-export const EditableForm = (props: PropsType) => {
+export const EditableForm = memo((props: PropsType) => {
+
+    console.log('EditableForm is called!')
+
 
     const [value, setValue] = useState(props.value)
     const [edit, setEdit] = useState<boolean>(false)
@@ -40,4 +43,4 @@ export const EditableForm = (props: PropsType) => {
             }
         </>
     )
-}
+})

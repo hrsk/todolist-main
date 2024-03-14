@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, KeyboardEvent } from "react"
+import { ChangeEvent, useState, KeyboardEvent, memo } from "react"
 import { Button } from "./Button"
 import './App.css'
 
@@ -6,7 +6,9 @@ type PropsType = {
     callback: (value: string) => void
 }
 
-export const AddItemForm = (props: PropsType) => {
+export const AddItemForm = memo((props: PropsType) => {
+
+    console.log('AddItemForm is called!')
 
     const [value, setValue] = useState<string>('')
     const [error, setError] = useState<string | null>(null)
@@ -29,6 +31,9 @@ export const AddItemForm = (props: PropsType) => {
         if (e.altKey && e.key === 'Enter') {
             callbackHandler()
         }
+        if (error !== null) {
+            setError(null)
+        }
     }
 
     return (
@@ -43,4 +48,4 @@ export const AddItemForm = (props: PropsType) => {
             }
         </div>
     )
-}
+})
