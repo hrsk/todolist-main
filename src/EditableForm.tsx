@@ -7,9 +7,6 @@ type PropsType = {
 
 export const EditableForm = memo((props: PropsType) => {
 
-    console.log('EditableForm is called!')
-
-
     const [value, setValue] = useState(props.value)
     const [edit, setEdit] = useState<boolean>(false)
 

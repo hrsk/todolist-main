@@ -1,4 +1,3 @@
-
 import { memo, useCallback } from 'react'
 import './App.css'
 import { Button } from './Button'
@@ -14,8 +13,6 @@ type PropsType = {
 }
 
 export const Task = memo((props: PropsType) => {
-
-    console.log('Task is called!')
 
     const changeTaskStatusHandler = useCallback((taskId: string, isDone: boolean) => {
         props.changeTaskStatus(props.todolistId, taskId, isDone)

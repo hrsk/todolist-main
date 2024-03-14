@@ -1,20 +1,13 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { AddItemForm } from './AddItemForm';
-import './App.css';
-import { Todolist } from './Todolist';
-import { AppStateType } from './store/store';
-import { FilterValuesType, TasksType, TodolistType } from './types';
-import { addTaskActionCreator, changeTaskStatusActionCreator, changeTaskTitleActionCreator, removeTaskActionCreator } from './tasks-reducer';
-import { addTodolistActionCreator, changeTodolistFilterActionCreator, changeTodolistTitleActionCreator, removeTodolistActionCreator } from './todolist-reducer';
-import { useCallback } from 'react';
+import { useCallback } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { Todolist } from "./Todolist"
+import { AppStateType } from "./store/store"
+import { addTaskActionCreator, changeTaskStatusActionCreator, changeTaskTitleActionCreator, removeTaskActionCreator } from "./tasks-reducer"
+import { changeTodolistFilterActionCreator, changeTodolistTitleActionCreator, removeTodolistActionCreator } from "./todolist-reducer"
+import { FilterValuesType, TodolistType } from "./types"
 
+export const Lists = () => {
 
-export const AppWithRedux = () => {
-
-    console.log('AppWithRedux is called!')
-
-
-    const tasks = useSelector<AppStateType, TasksType>(state => state.tasks)
     const todolists = useSelector<AppStateType, TodolistType[]>(state => state.todo)
     const dispatch = useDispatch()
 
@@ -38,10 +31,6 @@ export const AppWithRedux = () => {
         dispatch(removeTodolistActionCreator(todolistId))
     }, [])
 
-    const addTodolist = useCallback((value: string) => {
-        dispatch(addTodolistActionCreator(value))
-    }, [])
-
     const changeTaskTitle = useCallback((todolistId: string, taskId: string, value: string) => {
         dispatch(changeTaskTitleActionCreator(todolistId, taskId, value))
     }, [])
@@ -51,23 +40,12 @@ export const AppWithRedux = () => {
     }, [])
 
     return (
-        <div className="App">
-            <AddItemForm callback={addTodolist} />
+        <div>
             {todolists.map(todolist => {
-
-                let filteredTasks = tasks[todolist.id];
-                // if (todolist.filter === 'Active') {
-                //     filteredTasks = tasks[todolist.id].filter(tasks => !tasks.isDone)
-                // }
-                // if (todolist.filter === 'Completed') {
-                //     filteredTasks = tasks[todolist.id].filter(tasks => tasks.isDone)
-                // }
-
                 return (
                     <Todolist key={todolist.id}
                         todolistId={todolist.id}
                         title={todolist.title}
-                        tasks={filteredTasks}
                         filter={todolist.filter}
                         removeTask={removeTask}
                         addTask={addTask}
